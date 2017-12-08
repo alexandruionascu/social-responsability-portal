@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Button, Col, Row, Icon, Input} from 'react-materialize';
 
 const materialCityBackground = require('./images/material_city.jpg');
+const materialPurpleBackground = require('./images/material_background_purple.jpg');
 
 const leftColStyle = {
     color: 'black'
@@ -13,7 +14,9 @@ const noMarginRow = {
 };
 
 const buttonStyle = {
-    textTransform: 'none'
+    textTransform: 'none',
+    backgroundColor: '#cc3cdb',
+    fontWeight: 600
 };
 
 class LoginPage extends React.Component < any,
@@ -24,12 +27,13 @@ any > {
                 className="valign-wrapper"
                 style={{
                 height: '100vh',
-                background: "white",
+                background: `url(${materialPurpleBackground})`,
+                backgroundSize: 'cover',
                 fontWeight: 700
             }}>
                 <div
                     style={{
-                    background: 'white',
+                    background: '#F8F8F8',
                     margin: '0 auto',
                     color: 'white',
                     fontWeight: 500
