@@ -53,9 +53,9 @@ any > {
                             </Col>
 
                             <Col s={6} className="center-align" style={leftColStyle}>
-                                <h1>Login</h1>
+                                <Icon large className="login-icon">done_all</Icon>
                                 <Input s={10} label="email" validate type='email'>
-                                    <Icon>mail_outline</Icon>
+                                    <Icon large className="login-icon">mail_outline</Icon>
                                 </Input>
                             </Col>
                         </Row>
@@ -66,7 +66,7 @@ any > {
                             </Col>
                             <Col s={6} className="center-align" style={leftColStyle}>
                                 <Input s={10} type='password' label="password" validate>
-                                    <Icon>lock_outline</Icon>
+                                    <Icon small className="login-icon">lock_outline</Icon>
                                 </Input>
                             </Col>
                         </Row>
@@ -76,7 +76,7 @@ any > {
                                 <Button style={buttonStyle}>Sign Up</Button>
                             </Col>
                             <Col s={6} className="center-align" style={leftColStyle}>
-                                <Button style={buttonStyle}>Login In</Button>
+                                <Button style={buttonStyle}>Log In</Button>
                             </Col>
                         </Row>
 
