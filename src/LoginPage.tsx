@@ -55,7 +55,7 @@ any > {
                             <Col s={6} className="center-align" style={leftColStyle}>
                                 <h1>Login</h1>
                                 <Input s={10} label="email" validate type='email'>
-                                    <Icon>email</Icon>
+                                    <Icon>mail_outline</Icon>
                                 </Input>
                             </Col>
                         </Row>
@@ -66,7 +66,7 @@ any > {
                             </Col>
                             <Col s={6} className="center-align" style={leftColStyle}>
                                 <Input s={10} type='password' label="password" validate>
-                                    <Icon>lock</Icon>
+                                    <Icon>lock_outline</Icon>
                                 </Input>
                             </Col>
                         </Row>
