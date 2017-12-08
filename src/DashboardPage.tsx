@@ -1,6 +1,7 @@
 import * as React from 'react';
 import GoogleMapReact from 'google-map-react';
 import {Card, Col, Navbar, NavItem} from 'react-materialize';
+import HorizontalCard from './HorizontalCard';
 
 interface MapsProps {
     lat : number,
@@ -47,12 +48,12 @@ any > {
                 padding: 0
             }}>
 
-                <Navbar style={{width: '100%', padding: 0}} brand="Archis" right>
+                <Navbar style={{width: '100%', padding: 0, background: 'purple'}} brand="Archis" right>
                     <NavItem >
                         Getting started
                     </NavItem>
                     <NavItem>
-                        Compile
+                        Home
                     </NavItem>
                     <NavItem href='components.html'/>
                 </Navbar>
@@ -60,8 +61,16 @@ any > {
                     s={4}
                     style={{
                     height: '90%',
-                    padding: 10
-                }}></Col>
+                    padding: 10,
+                    overflow: 'scroll'
+                }}>
+                    <HorizontalCard />
+                    <HorizontalCard />
+                    <HorizontalCard />
+                    <HorizontalCard />
+                    <HorizontalCard />
+                    <HorizontalCard />
+                </Col>
                 <Col s={8} style={{
                     height: '90%',
                     padding: 10
