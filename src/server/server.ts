@@ -21,7 +21,10 @@ app.use(bodyParser.urlencoded({
 app.use(express.static('public'))
 app.use('/users', usersRoute);
 
-
+mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+mongoose.connection.on('open', function() {
+  console.log('Connected to MongoDB!');
+});
 
 app.get('/hello', function(req, res){
   res.send('hello world');
@@ -32,6 +35,8 @@ app.get('/hello', function(req, res){
 UserModel.findUser('Sefu').then((res) => {
   console.log(res);
 });
+
+console.log('no answer');
 
 mongoose.connection.on('error', function() {
   console.error.bind(console, 'connection error:')

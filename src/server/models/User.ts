@@ -119,4 +119,5 @@ export class UserRepository extends RepositoryBase<IUserModel> {
 }
 
 Object.seal(UserRepository);
+console.log(process.env.DB_URL);
 mongoose.connect(process.env.DB_URL!);

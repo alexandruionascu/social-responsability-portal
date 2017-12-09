@@ -1,7 +1,10 @@
 import {Router, Request, Response} from 'express';
-import {UserModel} from '../models/User';
+import * as mongoose from 'mongoose';
+import {UserModel, IUserModel} from '../models/User';
+import * as PasswordHash from 'password-hash';
 const users: Router = Router();
 
+mongoose.connect(process.env.DB_URL!);
 
 users.get('/', function(req: Request, res: Response) {
     console.log('users get');
@@ -10,10 +13,14 @@ users.get('/', function(req: Request, res: Response) {
 
 users.post('/', function(req: Request, res: Response) {
     console.log('users post');
-    UserModel.createUser(req.body).then(() => {
+    let userData = req.body as IUserModel;
+    userData.password = PasswordHash.generate(userData.password);
+    UserModel.createUser(userData).then((user) => {
         console.log('created');
-    }).then(() => {
+        console.log(user);
         res.sendStatus(200);
+    }).catch((err) => {
+        console.log(err);
     });
 });
 

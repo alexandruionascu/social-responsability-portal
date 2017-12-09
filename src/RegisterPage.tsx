@@ -38,7 +38,7 @@ function signUp(history) {
         },
         body: JSON.stringify(formData)
     }).then(() => {
-        history.push('/dashboard');
+        //history.push('/dashboard');
     });
 }
 

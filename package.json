@@ -9,6 +9,7 @@
     "express": "^4.16.2",
     "google-map-react": "^0.25.0",
     "mongoose": "^4.13.6",
+    "password-hash": "^1.2.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-materialize": "^1.1.1",
