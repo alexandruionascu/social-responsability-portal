@@ -48,7 +48,7 @@ any > {
                         backgroundRepeat: 'no-repeat'
                     }}>
                         <Row style={noMarginRow}>
-                            <Col s={6}>
+                            <Col s={6} className="center-align">
                                 <h1>Archis</h1>
                             </Col>
 
