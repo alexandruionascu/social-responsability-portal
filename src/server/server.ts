@@ -1,13 +1,14 @@
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import {UserModel} from './models/User';
+import usersRoute from './routes/User';
 
 // load environment variables
 require('dotenv').config();
-//var express = require('express');
 let app = express();
 
 app.use(express.static('public'))
+app.use('/users', usersRoute);
 
 app.get('/hello', function(req, res){
   res.send('hello world');
@@ -24,7 +25,6 @@ mongoose.connection.on('error', function() {
 });
 mongoose.connection.on('open', function() {
   console.log('connected');
-
 });
 
 
