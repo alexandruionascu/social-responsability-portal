@@ -72,7 +72,7 @@ any > {
                         </Row>
 
                         <Row style={noMarginRow}>
-                            <Col s={6}>
+                            <Col s={6} className="center-align">
                                 <Button style={buttonStyle}>Sign Up</Button>
                             </Col>
                             <Col s={6} className="center-align" style={leftColStyle}>
