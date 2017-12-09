@@ -109,7 +109,7 @@ State > {
                             <Input s={2} label="description"/>
                             <Input s={2} label="image url"/>
                         </Row>
-                        <Button className="waves-effect waves-light btn-large" style={{
+                        <Button style={{
                             background: 'white',
                             color: 'purple',
                             fontWeight: 700,
