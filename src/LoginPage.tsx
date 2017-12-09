@@ -49,7 +49,7 @@ any > {
                     }}>
                         <Row style={noMarginRow}>
                             <Col s={6}>
-                                <h1>Social Portal</h1>
+                                <h1>Archis</h1>
                             </Col>
 
                             <Col s={6} className="center-align" style={leftColStyle}>
