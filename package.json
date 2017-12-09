@@ -16,6 +16,7 @@
     "react-scripts-ts": "2.8.0"
   },
   "scripts": {
+    "front-end": "react-scripts-ts start",
     "compile-server": "tsc -t ES5 --lib es6 src/server/server.ts --outDir src/server/build",
     "server": "npm run compile-server && node src/server/build/server.js",
     "start": "npm run server & react-scripts-ts start",

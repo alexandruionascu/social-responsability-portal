@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Button, Col, Row, Icon, Input} from 'react-materialize';
+import {Route} from 'react-router-dom';
 
 const materialCityBackground = require('./images/material_city.jpg');
 const materialPurpleBackground = require('./images/material_background_purple.jpg');
@@ -19,10 +20,25 @@ const buttonStyle = {
     fontWeight: 600
 };
 
-function signUp() {
-    console.log('button clicked');
-    //var el = document.querySelector('.col input');
-
+function signUp(history) {
+    let formData = new Object();
+    let formItems = document.querySelectorAll('.col input');
+    for (let i = 0; i < formItems.length; i++) {
+        let element = formItems.item(i);
+        let attrName = element.attributes['name'].nodeValue;
+        let value = element.attributes['value'].nodeValue;
+        formData[attrName] = value;
+    }
+    console.log(`${process.env["REACT_APP_HOST_NAME"]}/users`);
+    fetch(`${process.env["REACT_APP_HOST_NAME"]}/users`, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    }).then(() => {
+        history.push('/dashboard');
+    });
 }
 
 class RegisterPage extends React.Component < any,
@@ -60,38 +76,36 @@ any > {
 
                             <Col s={6} className="center-align" style={leftColStyle}>
                                 <Icon large className="login-icon">done_all</Icon>
-                                <Input s={10} label="email" validate type='email'>
+                                <Input s={10} label="email" name="email" validate type='email'>
                                     <Icon large className="login-icon">mail_outline</Icon>
                                 </Input>
                             </Col>
                         </Row>
 
                         <Row style={noMarginRow}>
-                            <Col s={6} />
+                            <Col s={6}/>
                             <Col s={6} className="center-align" style={leftColStyle}>
-                                <Input s={10} type='password' label="password" validate>
+                                <Input s={10} type='password' name="password" label="password" validate>
                                     <Icon small className="login-icon">lock_outline</Icon>
                                 </Input>
                             </Col>
                         </Row>
 
-
                         <Row style={noMarginRow}>
-                            <Col s={6} />
+                            <Col s={6}/>
                             <Col s={6} className="center-align" style={leftColStyle}>
-                                <Input s={10} type='password' label="real name" validate>
+                                <Input s={10} name="name" label="real name" validate>
                                     <Icon small className="login-icon">perm_identity</Icon>
                                 </Input>
                             </Col>
                         </Row>
-                        
 
                         <Row style={noMarginRow}>
                             <Col s={6}>
                                 <h4>Track local issues right now!</h4>
                             </Col>
                             <Col s={6} className="center-align" style={leftColStyle}>
-                                <Input s={10} type='password' label="avatar" validate>
+                                <Input s={10} name="profileUrl" label="avatar" validate>
                                     <Icon small className="login-icon">photo_filter</Icon>
                                 </Input>
                             </Col>
@@ -102,7 +116,10 @@ any > {
                                 <Button style={buttonStyle}>Log in</Button>
                             </Col>
                             <Col s={6} className="center-align" style={leftColStyle}>
-                                <Button style={buttonStyle} onClick={signUp}>Sign Up</Button>
+                                <Route
+                                    render={({history}) => (
+                                    <Button style={buttonStyle} onClick={() => signUp(history)}>Sign Up</Button>
+                                )}/>
                             </Col>
                         </Row>
                     </Row>
