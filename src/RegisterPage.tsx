@@ -37,8 +37,14 @@ function signUp(history) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
-    }).then(() => {
-        //history.push('/dashboard');
+    }).then((res) => {
+        return res.json();
+    }).then((json) => {
+        console.log(json);  
+        history.push({
+            pathname: '/map',
+            state: json
+        }); 
     });
 }
 
