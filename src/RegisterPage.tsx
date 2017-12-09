@@ -22,6 +22,7 @@ const buttonStyle = {
 
 function signUp(history) {
     let formData = new Object();
+    // get all input elements from the register form
     let formItems = document.querySelectorAll('.col input');
     for (let i = 0; i < formItems.length; i++) {
         let element = formItems.item(i);

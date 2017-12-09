@@ -1,35 +1,33 @@
 import * as React from 'react';
 import GoogleMapReact from 'google-map-react';
-import {Card, Col, Navbar, NavItem} from 'react-materialize';
+import {Col, Navbar, NavItem} from 'react-materialize';
 import HorizontalCard from './HorizontalCard';
+
+const API_KEY = process.env.REACT_APP_API_KEY;
+console.log(API_KEY);
 
 interface MapsProps {
     lat : number,
     lng : number
 };
 
+interface State {
+    pinLat: number,
+    pinLng: number
+};
+
 class AnyReactComponent extends React.Component < MapsProps,
-any > {
+any> {
     render() {
         return (
 
-            <Card
-                className='blue-grey darken-1 grow'
-                style={{
-                width: '200px',
-                fontSize: '1em'
-            }}
-                textClassName='white-text'
-                title='Card title'
-                actions={[ < a href = '#' > This is a link </a>]}>
-                I am a very simple card.
-            </Card>
+            <h1>Boss</h1>
 
         );
     }
 }
 class DashboardPage extends React.Component < any,
-any > {
+State > {
     static defaultProps = {
         center: {
             lat: 59.95,
@@ -37,6 +35,23 @@ any > {
         },
         zoom: 11
     };
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            pinLat: 0,
+            pinLng: 0
+        };
+    }
+
+    onClick(event) {
+        this.setState({
+            pinLat: event.lat,
+            pinLng: event.lng
+        });
+        console.log(event);
+    }
+
     render() {
         return (
             <div
@@ -75,10 +90,9 @@ any > {
                     height: '90%',
                     padding: 10
                 }}>
-                    <GoogleMapReact defaultCenter={this.props.center} defaultZoom={this.props.zoom}>
-                        <AnyReactComponent lat={49.95} lng={30.33}/>
-                        <AnyReactComponent lat={39.95} lng={30.38}/>
+                    <GoogleMapReact bootstrapURLKeys={{key: API_KEY}} onClick={(event) => this.onClick(event)} defaultCenter={this.props.center} defaultZoom={this.props.zoom}>
                         <AnyReactComponent lat={60.95} lng={30.33}/>
+                        <AnyReactComponent lat={this.state.pinLat} lng={this.state.pinLng} />
                     </GoogleMapReact>
                 </Col>
                 <div></div>
