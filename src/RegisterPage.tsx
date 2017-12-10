@@ -111,7 +111,7 @@ any > {
                                 <h4>Track local issues right now!</h4>
                             </Col>
                             <Col s={6} className="center-align" style={leftColStyle}>
-                                <Input s={10} name="profileUrl" label="avatar" validate>
+                                <Input s={10} name="pictureUrl" label="avatar" validate>
                                     <Icon small className="login-icon">photo_filter</Icon>
                                 </Input>
                             </Col>

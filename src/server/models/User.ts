@@ -22,6 +22,10 @@ const schema = new Schema({
 	   type: String,
 	   required: true
   },
+  pictureUrl: {
+    type: String,
+    required: true
+  },
   password: {
 	   type: String,
 	   required: true

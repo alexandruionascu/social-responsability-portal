@@ -5,6 +5,16 @@ const issues: Router = Router();
 
 mongoose.connect(process.env.DB_URL!);
 
+
+issues.get('/', function(req: Request, res: Response, next) {
+    IssueModel.getAll().then((issues) => {
+        res.send(issues);
+        next();
+    }).catch(err => {
+        console.log(err);
+    });
+})
+
 issues.post('/', function(req: Request, res: Response, next) {
     let issueData = req.body as IIssueModel;
     IssueModel.createIssue(issueData).then((issue) => {

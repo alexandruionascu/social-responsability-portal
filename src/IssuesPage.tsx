@@ -23,7 +23,8 @@ interface MapsProps {
 interface State {
     pinLat : number,
     pinLng : number,
-    userId : string
+    usersState : any,
+    issues: HorizontalCard[]
 };
 
 class Pin extends React.Component < MapsProps,
@@ -60,8 +61,21 @@ class IssuesPage extends React.Component <{
         this.state = {
             pinLat: 45.74,
             pinLng: 21.23,
-            userId: this.props.location.state.id
+            usersState: this.props.location.state,
+            issues: []
         };
+
+        fetch(`${process.env["REACT_APP_HOST_NAME"]}/issues`, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => {return res.json();}).then((json) => {
+            this.setState({
+                issues: json.map(x => <HorizontalCard profileUrl={x.imageUrl as string}
+                 description={x.description as string} />)
+            });
+        });
 
         if (navigator.geolocation) {
             navigator
@@ -88,7 +102,8 @@ class IssuesPage extends React.Component <{
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                author: this.state.userId,
+                author: this.state.usersState.id,
+                authorProfileUrl: this.state.usersState.profilePictureUrl,
                 description: description,
                 imageUrl: imageUrl,
                 latitude: this.state.pinLat,
@@ -157,12 +172,7 @@ class IssuesPage extends React.Component <{
                     padding: 10,
                     overflow: 'scroll'
                 }}>
-                    <HorizontalCard/>
-                    <HorizontalCard/>
-                    <HorizontalCard/>
-                    <HorizontalCard/>
-                    <HorizontalCard/>
-                    <HorizontalCard/>
+                   {this.state.issues}
                 </Col>
                 <Col
                     s={8}

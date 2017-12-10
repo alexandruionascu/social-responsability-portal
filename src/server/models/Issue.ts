@@ -6,6 +6,7 @@ require('dotenv').config();
 
 export interface IIssueModel extends mongoose.Document {
   author: string;
+  authorProfileUrl: string;
   imageUrl: string;
   description: string;
   latitude: number,
@@ -18,8 +19,12 @@ export interface IIssueModel extends mongoose.Document {
 
 const schema = new Schema({
   author: {
-       type: String,
+     type: String,
 	   required: true
+  },
+  authorProfileUrl: {
+    type: String,
+    required: true
   },
   imageUrl: {
 	   type: String,
@@ -101,6 +106,25 @@ export class IssueModel {
       let repo = new IssueRepository();
 
       repo.find({author: author}).sort({createdAt: -1}).exec((err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          if (res.length) {
+            resolve(res);
+          } else {
+            resolve(undefined);
+          }
+        }
+      });
+    });
+    
+    return promise;    
+  }
+
+  static getAll():  Promise<mongoose.Document[]> {
+    let promise = new Promise<mongoose.Document[]>((resolve, reject) => {
+      let repo = new IssueRepository();
+      repo.find({}).sort({createdAt: -1}).exec((err, res) => {
         if (err) {
           reject(err);
         } else {

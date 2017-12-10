@@ -15,7 +15,8 @@ users.post('/', function(req: Request, res: Response, next) {
     let userData = req.body as IUserModel;
     userData.password = PasswordHash.generate(userData.password);
     UserModel.createUser(userData).then((user) => {
-        res.json({id: user._id});
+        console.log(user.pictureUrl);
+        res.json({id: user._id, profilePictureUrl: user.pictureUrl});
         next();
     }).catch((err) => {
         console.log(err);

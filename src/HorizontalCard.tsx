@@ -1,15 +1,20 @@
 import * as React from 'react';
 
-class HorizontalCard extends React.Component<any, any> {
+interface Props {
+  profileUrl: string,
+  description: string
+}
+
+class HorizontalCard extends React.Component<Props, any> {
     render() {
         return (<div className="col s12">
         <div className="card horizontal">
-          <div className="valign-wrapper card-image"   style={{padding: 5}}>
-            <img className="z-depth-2" style={{borderRadius: '50%'}} src="https://randomuser.me/api/portraits/men/64.jpg" />
+          <div className="valign-wrapper card-image" style={{padding: 5}}>
+            <img className="z-depth-2" style={{borderRadius: '50%'}} src={this.props.profileUrl} />
           </div>
           <div className="card-stacked">
             <div className="card-content">
-              <p>I am a very simple card. I am good at containing small bits of information.</p>
+              <p>{this.props.description}</p>
             </div>
             <div className="card-action">
               <a href="#">This is a link</a>
