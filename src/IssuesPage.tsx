@@ -18,11 +18,12 @@ const PIN_SIZE = 48;
 interface MapsProps {
     lat : number,
     lng : number
-};
+}
 
 interface State {
     pinLat : number,
-    pinLng : number
+    pinLng : number,
+    userId : string
 };
 
 class AnyReactComponent extends React.Component < MapsProps,
@@ -41,8 +42,11 @@ any > {
         );
     }
 }
-class IssuesPage extends React.Component < any,
-State > {
+class IssuesPage extends React.Component <{
+    location : any,
+    center : any,
+    zoom : any
+}, State> {
     static defaultProps = {
         center: {
             lat: 45.74,
@@ -55,8 +59,10 @@ State > {
         super(props);
         this.state = {
             pinLat: 45.74,
-            pinLng: 21.23
+            pinLng: 21.23,
+            userId: this.props.location.state.id
         };
+
         if (navigator.geolocation) {
             navigator
                 .geolocation
@@ -102,14 +108,15 @@ State > {
                         options={{
                         dissmisable: true
                     }}
-                        actions={<span/>}
+                        actions={<span />}
                         bottomSheet
                         trigger={<NavItem> Submit issue </NavItem>}>
                         <Row>
                             <Input s={2} label="description"/>
                             <Input s={2} label="image url"/>
                         </Row>
-                        <Button style={{
+                        <Button
+                            style={{
                             background: 'white',
                             color: 'purple',
                             fontWeight: 700,
