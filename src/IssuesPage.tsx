@@ -26,7 +26,7 @@ interface State {
     userId : string
 };
 
-class AnyReactComponent extends React.Component < MapsProps,
+class Pin extends React.Component < MapsProps,
 any > {
     render() {
         return (
@@ -78,6 +78,28 @@ class IssuesPage extends React.Component <{
         console.log(event);
     }
 
+    submitNewIssue() {
+        let description = (document.getElementById("description") as HTMLInputElement).value;
+        let imageUrl = (document.getElementById("imageUrl") as HTMLInputElement).value;
+        fetch(`${process.env["REACT_APP_HOST_NAME"]}/issues`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                author: this.state.userId,
+                description: description,
+                imageUrl: imageUrl,
+                latitude: this.state.pinLat,
+                longitude: this.state.pinLng
+            })
+        }).then((res) => {
+            return res.json();
+        }).then((json) => {
+            console.log(json);   
+        });
+    }
+
     render() {
         return (
             <div
@@ -112,8 +134,8 @@ class IssuesPage extends React.Component <{
                         bottomSheet
                         trigger={<NavItem> Submit issue </NavItem>}>
                         <Row>
-                            <Input s={2} label="description"/>
-                            <Input s={2} label="image url"/>
+                            <Input s={2} id="description" label="description"/>
+                            <Input s={2} id="imageUrl" label="image url"/>
                         </Row>
                         <Button
                             style={{
@@ -121,7 +143,7 @@ class IssuesPage extends React.Component <{
                             color: 'purple',
                             fontWeight: 700,
                             textTransform: 'none'
-                        }}>Confirm</Button>
+                        }} onClick={() => this.submitNewIssue()}>Confirm</Button>
                     </Modal>
                     <NavItem href='components.html'/>
                 </Navbar>
@@ -152,7 +174,7 @@ class IssuesPage extends React.Component <{
                         onClick={(event) => this.onClick(event)}
                         defaultCenter={this.props.center}
                         defaultZoom={this.props.zoom}>
-                        <AnyReactComponent lat={this.state.pinLat} lng={this.state.pinLng}/>
+                        <Pin lat={this.state.pinLat} lng={this.state.pinLng}/>
                     </GoogleMapReact>
                 </Col>
                 <div></div>

@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as mongoose from 'mongoose';
 import {UserModel} from './models/User';
 import usersRoute from './routes/User';
+import issueRoute from './routes/Issue';
 const bodyParser = require('body-parser');
 // load environment variables
 require('dotenv').config();
@@ -20,6 +21,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static('public'))
 app.use('/users', usersRoute);
+app.use('/issues', issueRoute);
 
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.on('open', function() {

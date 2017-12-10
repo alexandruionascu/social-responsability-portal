@@ -8,6 +8,8 @@ export interface IIssueModel extends mongoose.Document {
   author: string;
   imageUrl: string;
   description: string;
+  latitude: number,
+  longitude: number,
   upvotes: number;
   downvotes: number;
   createdAt: Date;
@@ -26,6 +28,14 @@ const schema = new Schema({
   description: {
 	   type: String,
 	   required: true
+  },
+  latitude: {
+    type: Number,
+    required: true
+  },
+  longitude: {
+    type: Number,
+    required: true
   },
   upvotes: {
       type: Number,
@@ -60,7 +70,7 @@ schema.pre('save',function (this, next) {
   return this;
 });
 
-export const IssueSchema = mongoose.model<IIssueModel>('Issue', schema, 'Issues', true);
+export const IssueSchema = mongoose.model<IIssueModel>('issue', schema, 'issues', true);
 
 export class IssueModel {
 
@@ -70,13 +80,6 @@ export class IssueModel {
     this._IssueModel = IssueModel;
   }
   
-  get author(): string {
-      return this._IssueModel.author;
-  }
-
-  get pictureUrl(): string {
-    return this._IssueModel.imageUrl;
-  }
   
   static createIssue(Issue: IIssueModel) : Promise<IIssueModel> {
     let promise = new Promise<IIssueModel>((resolve, reject) => {
@@ -97,7 +100,7 @@ export class IssueModel {
     let promise = new Promise<mongoose.Document[]>((resolve, reject) => {
       let repo = new IssueRepository();
 
-      repo.find({author: author}).sort({createdAt: -1}).limit(1).exec((err, res) => {
+      repo.find({author: author}).sort({createdAt: -1}).exec((err, res) => {
         if (err) {
           reject(err);
         } else {
