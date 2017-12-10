@@ -23,8 +23,17 @@ interface MapsProps {
 interface State {
     pinLat : number,
     pinLng : number,
+    issueLat : number,
+    issueLng : number,
     usersState : any,
-    issues: HorizontalCard[]
+    issues : HorizontalCard[],
+    zoom: number,
+    center: number[],
+    issueImageUrl: string,
+    visible: boolean,
+    description: string,
+    downvotes: number,
+    upvotes: number
 };
 
 class Pin extends React.Component < MapsProps,
@@ -43,6 +52,30 @@ any > {
         );
     }
 }
+
+interface IssueCardProps extends MapsProps {
+    description: string,
+    imageUrl: string,
+    id?: string
+}
+class IssueCard extends React.Component <IssueCardProps, any> {
+    render() {
+        return (<div className="card hoverable" style={{width: 200}}>
+        <div className="card-image waves-effect waves-block waves-light">
+          <img className="activator" src={this.props.imageUrl} />
+        </div>
+        <div className="card-content">
+          <span className="card-title activator grey-text text-darken-4">City Issue<i className="material-icons right">more_vert</i></span>
+          <p><a href="#">This is a link</a></p>
+        </div>
+        <div className="card-reveal">
+          <span className="card-title grey-text text-darken-4">City Issue<i className="material-icons right">close</i></span>
+          <p>{this.props.description}</p>
+        </div>
+      </div>);
+    }
+}
+
 class IssuesPage extends React.Component <{
     location : any,
     center : any,
@@ -61,8 +94,17 @@ class IssuesPage extends React.Component <{
         this.state = {
             pinLat: 45.74,
             pinLng: 21.23,
+            issueLat: 0,
+            center: [0, 0],
+            zoom: 11,
+            issueLng: 0,
             usersState: this.props.location.state,
-            issues: []
+            issues: [],
+            issueImageUrl: "http://fructiflora.ro/wp-content/uploads/2016/09/Trandafir-Black-Magic-500x400.jpg",
+            upvotes: 0,
+            downvotes: 0,
+            description: "Default text de je",
+            visible: true
         };
 
         fetch(`${process.env["REACT_APP_HOST_NAME"]}/issues`, {
@@ -72,8 +114,12 @@ class IssuesPage extends React.Component <{
             }
         }).then((res) => {return res.json();}).then((json) => {
             this.setState({
-                issues: json.map(x => <HorizontalCard profileUrl={x.imageUrl as string}
-                 description={x.description as string} />)
+                issues: json.map(x => <HorizontalCard 
+                        profileUrl={x.authorProfileUrl as string}
+                        description={x.description as string}
+                        onClick={() => {this.updateIssue(x.latitude, x.longitude);
+                                        this.updateCard(x.imageUrl, x.description);}}
+                />)
             });
         });
 
@@ -85,6 +131,25 @@ class IssuesPage extends React.Component <{
                     this.setState({pinLat: position.coords.latitude, pinLng: position.coords.longitude});
                 });
         }
+    }
+
+    updateCard(image, description) {
+        this.setState({
+            description: description,
+            issueImageUrl: image
+        });
+    }
+
+    updateIssue(lat, long) {
+        console.log('isHere', lat, long);
+        this.setState({
+            issueLat: lat,
+            issueLng: long,
+            pinLat: lat,
+            pinLng: long,
+            center: [lat, long],
+            zoom: 15
+        });
     }
 
     onClick(event) {
@@ -185,9 +250,10 @@ class IssuesPage extends React.Component <{
                         key: API_KEY
                     }}
                         onClick={(event) => this.onClick(event)}
-                        defaultCenter={this.props.center}
-                        defaultZoom={this.props.zoom}>
+                        center={this.state.center}
+                        zoom={this.state.zoom}>
                         <Pin lat={this.state.pinLat} lng={this.state.pinLng}/>
+                        <IssueCard description={this.state.description} imageUrl={this.state.issueImageUrl}  lat={this.state.issueLat} lng={this.state.issueLng} />
                     </GoogleMapReact>
                 </Col>
                 <div></div>
