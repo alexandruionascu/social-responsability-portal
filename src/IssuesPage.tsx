@@ -3,6 +3,8 @@ import GoogleMapReact from 'google-map-react';
 import {
     Button,
     Col,
+    Collection,
+    CollectionItem,
     Input,
     Modal,
     Navbar,
@@ -78,6 +80,13 @@ class IssueCard extends React.Component <IssueCardProps, any> {
         <div className="card-reveal">
           <span className="card-title grey-text text-darken-4">City Issue<i className="material-icons right">close</i></span>
           <p>{this.props.description}</p>
+          <Row>
+              <Input placeholder="write a comment" s={12} />
+          </Row>
+          <Collection>
+            <CollectionItem>Asa e</CollectionItem>
+            <CollectionItem>Alvin</CollectionItem>
+        </Collection>
         </div>
       </div>);
     }
@@ -99,7 +108,7 @@ class IssuesPage extends React.Component <{
             issueLng: 0,
             usersState: this.props.location.state,
             issues: [],
-            issueImageUrl: "http://fructiflora.ro/wp-content/uploads/2016/09/Trandafir-Black-Magic-500x400.jpg",
+            issueImageUrl: "",
             upvotes: 0,
             downvotes: 0,
             description: "Default text de je",
@@ -260,7 +269,8 @@ class IssuesPage extends React.Component <{
                         center={this.state.center}
                         zoom={this.state.zoom}>
                         <Pin lat={this.state.pinLat} lng={this.state.pinLng}/>
-                        <IssueCard className={this.state.className} description={this.state.description} imageUrl={this.state.issueImageUrl}  lat={this.state.issueLat} lng={this.state.issueLng} />
+                        <IssueCard className={this.state.className} description={this.state.description}
+                         imageUrl={this.state.issueImageUrl}  lat={this.state.issueLat} lng={this.state.issueLng} />
                     </GoogleMapReact>
                 </Col>
                 <div></div>

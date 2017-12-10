@@ -13,6 +13,7 @@ export interface IIssueModel extends mongoose.Document {
   longitude: number,
   upvotes: number;
   downvotes: number;
+  comments: string[],
   createdAt: Date;
   modifiedAt: Date;
 }
@@ -49,6 +50,10 @@ const schema = new Schema({
   downvotes: {
       type: Number,
       required: false
+  },
+  comments: {
+    type: [String],
+    required: false
   },
   createdAt: {
 	   type: Date,
