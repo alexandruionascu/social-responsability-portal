@@ -30,7 +30,6 @@ function signUp(history) {
         let value = element.attributes['value'].nodeValue;
         formData[attrName] = value;
     }
-    console.log(`${process.env["REACT_APP_HOST_NAME"]}/users`);
     fetch(`${process.env["REACT_APP_HOST_NAME"]}/users`, {
         method: 'post',
         headers: {

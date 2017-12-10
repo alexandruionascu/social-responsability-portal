@@ -79,6 +79,7 @@ class IssuesPage extends React.Component <{
     }
 
     submitNewIssue() {
+        let btn = (document.getElementById("submitButton") as HTMLElement);
         let description = (document.getElementById("description") as HTMLInputElement).value;
         let imageUrl = (document.getElementById("imageUrl") as HTMLInputElement).value;
         fetch(`${process.env["REACT_APP_HOST_NAME"]}/issues`, {
@@ -97,6 +98,7 @@ class IssuesPage extends React.Component <{
             return res.json();
         }).then((json) => {
             console.log(json);   
+            btn.textContent = "Succesfuly sent!";
         });
     }
 
@@ -138,6 +140,7 @@ class IssuesPage extends React.Component <{
                             <Input s={2} id="imageUrl" label="image url"/>
                         </Row>
                         <Button
+                            id="submitButton"
                             style={{
                             background: 'white',
                             color: 'purple',
