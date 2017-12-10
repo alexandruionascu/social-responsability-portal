@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Button, Col, Row, Icon, Input} from 'react-materialize';
-
+import {Link} from 'react-router-dom';
 const materialCityBackground = require('./images/material_city.jpg');
 const materialPurpleBackground = require('./images/material_background_purple.jpg');
 
@@ -73,7 +73,7 @@ any > {
 
                         <Row style={noMarginRow}>
                             <Col s={6} className="center-align">
-                                <Button style={buttonStyle}>Sign Up</Button>
+                                <Link to="/register" ><Button style={buttonStyle}>Sign Up</Button></Link>
                             </Col>
                             <Col s={6} className="center-align" style={leftColStyle}>
                                 <Button style={buttonStyle}>Log In</Button>

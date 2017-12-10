@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Button, Col, Row, Icon, Input} from 'react-materialize';
-import {Route} from 'react-router-dom';
+import {Route, Link} from 'react-router-dom';
 
 const materialCityBackground = require('./images/material_city.jpg');
 const materialPurpleBackground = require('./images/material_background_purple.jpg');
@@ -11,7 +11,7 @@ const leftColStyle = {
 
 const noMarginRow = {
     marginBottom: 0,
-    padding: 20
+    padding: 5
 };
 
 const buttonStyle = {
@@ -119,7 +119,7 @@ any > {
 
                         <Row style={noMarginRow}>
                             <Col s={6}>
-                                <Button style={buttonStyle}>Log in</Button>
+                                <Link to="/login"><Button style={buttonStyle}>Log in</Button></Link>
                             </Col>
                             <Col s={6} className="center-align" style={leftColStyle}>
                                 <Route

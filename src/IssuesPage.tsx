@@ -84,8 +84,14 @@ class IssueCard extends React.Component <IssueCardProps, any> {
               <Input placeholder="write a comment" s={12} />
           </Row>
           <Collection>
-            <CollectionItem>Asa e</CollectionItem>
-            <CollectionItem>Alvin</CollectionItem>
+            {
+                [<CollectionItem>Be careful!</CollectionItem>,
+                 <CollectionItem>I hope the local authorities are taking care of it!</CollectionItem>,
+                 <CollectionItem>I hope I won't be around anytime soon!</CollectionItem>,
+                 <CollectionItem>Incredible</CollectionItem>,
+                 <CollectionItem>Can't belive that happened!</CollectionItem>
+                ].sort(function(){return (4 * Math.random() > 2) ? 1 : -1})
+            }
         </Collection>
         </div>
       </div>);
