@@ -30,7 +30,7 @@ interface State {
     zoom: number,
     center: number[],
     issueImageUrl: string,
-    visible: boolean,
+    className: string,
     description: string,
     downvotes: number,
     upvotes: number
@@ -56,17 +56,24 @@ any > {
 interface IssueCardProps extends MapsProps {
     description: string,
     imageUrl: string,
-    id?: string
+    id?: string,
+    className: string
 }
 class IssueCard extends React.Component <IssueCardProps, any> {
     render() {
-        return (<div className="card hoverable" style={{width: 200}}>
+        return (<div className={this.props.className} style={{width: 200}}>
         <div className="card-image waves-effect waves-block waves-light">
           <img className="activator" src={this.props.imageUrl} />
         </div>
         <div className="card-content">
           <span className="card-title activator grey-text text-darken-4">City Issue<i className="material-icons right">more_vert</i></span>
-          <p><a href="#">This is a link</a></p>
+          <div>
+            <input type="checkbox" id="option1" />
+            <label htmlFor="option1">Confirm</label>
+            
+            <input type="checkbox" id="option2" />
+            <label htmlFor="option2">Deny</label>
+        </div>
         </div>
         <div className="card-reveal">
           <span className="card-title grey-text text-darken-4">City Issue<i className="material-icons right">close</i></span>
@@ -81,21 +88,13 @@ class IssuesPage extends React.Component <{
     center : any,
     zoom : any
 }, State> {
-    static defaultProps = {
-        center: {
-            lat: 45.74,
-            lng: 21.23
-        },
-        zoom: 11
-    };
-
     constructor(props : any) {
         super(props);
         this.state = {
             pinLat: 45.74,
             pinLng: 21.23,
             issueLat: 0,
-            center: [0, 0],
+            center: [45.74, 21.23],
             zoom: 11,
             issueLng: 0,
             usersState: this.props.location.state,
@@ -104,7 +103,7 @@ class IssuesPage extends React.Component <{
             upvotes: 0,
             downvotes: 0,
             description: "Default text de je",
-            visible: true
+            className: 'hide'
         };
 
         fetch(`${process.env["REACT_APP_HOST_NAME"]}/issues`, {
@@ -136,7 +135,8 @@ class IssuesPage extends React.Component <{
     updateCard(image, description) {
         this.setState({
             description: description,
-            issueImageUrl: image
+            issueImageUrl: image,
+            className: "card hoverable"
         });
     }
 
@@ -153,8 +153,13 @@ class IssuesPage extends React.Component <{
     }
 
     onClick(event) {
-        this.setState({pinLat: event.lat, pinLng: event.lng});
-        console.log(event);
+        let a = event.lat - this.state.issueLat;
+        let b = event.lng - this.state.issueLng;
+        // prevent collision
+        let c = Math.sqrt( a*a + b*b );
+        if (c > 1) {
+            this.setState({pinLat: event.lat, pinLng: event.lng, className: "hide"});
+        }
     }
 
     submitNewIssue() {
@@ -249,11 +254,13 @@ class IssuesPage extends React.Component <{
                         bootstrapURLKeys={{
                         key: API_KEY
                     }}
+                        minZoom={2}
+                        minZoomOverride={true}
                         onClick={(event) => this.onClick(event)}
                         center={this.state.center}
                         zoom={this.state.zoom}>
                         <Pin lat={this.state.pinLat} lng={this.state.pinLng}/>
-                        <IssueCard description={this.state.description} imageUrl={this.state.issueImageUrl}  lat={this.state.issueLat} lng={this.state.issueLng} />
+                        <IssueCard className={this.state.className} description={this.state.description} imageUrl={this.state.issueImageUrl}  lat={this.state.issueLat} lng={this.state.issueLng} />
                     </GoogleMapReact>
                 </Col>
                 <div></div>
